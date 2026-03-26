@@ -15,7 +15,7 @@ const Footer = () => {
               JOSEPH<span className="text-white">.</span>
             </h2>
             <p className="leading-relaxed text-sm max-w-xs">
-              Fullstack Software Engineer specializing in high-availability systems and secure cloud infrastructure. Based in Nairobi, working globally.
+              Lead Architect & Project Manager specializing in high-availability systems and secure cloud infrastructure. Based in Nairobi, working globally.
             </p>
             <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-500 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider border border-green-500/20">
               <span className="relative flex h-2 w-2">
@@ -37,46 +37,54 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Links */}
+          {/* Social Links - UPDATED */}
           <div>
             <h4 className="text-white font-bold uppercase text-[11px] tracking-[2px] mb-6">Social Ecosystem</h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="https://github.com/josephkwanusu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                <a href="https://github.com/Kwanusu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                   <i className="fa-brands fa-github w-4"></i> GitHub
                 </a>
               </li>
               <li>
-                <a href="#" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                <a href="https://www.linkedin.com/in/joseph-kwanusu-009576b7" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                   <i className="fa-brands fa-linkedin w-4"></i> LinkedIn
                 </a>
               </li>
               <li>
-                <a href="#" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                <a href="https://x.com/@kwanusujoseph" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                   <i className="fa-brands fa-x-twitter w-4"></i> X / Twitter
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Direct Contact */}
+          {/* Direct Contact - UPDATED */}
           <div>
             <h4 className="text-white font-bold uppercase text-[11px] tracking-[2px] mb-6">Direct Transmission</h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="mailto:hello@joseph.engineer" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
-                  <i className="fa-solid fa-envelope w-4"></i> hello@joseph.engineer
+                <a href="mailto:your.email@example.com" className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                  <i className="fa-solid fa-envelope w-4"></i> Send Email
                 </a>
               </li>
               <li>
-                <button className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
+                {/* Points to the public resume.md we set up earlier */}
+                <a href="/resume.md" download className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
                   <i className="fa-solid fa-file-pdf w-4"></i> Download Resume
-                </button>
+                </a>
               </li>
+              {/* Update this inside your Social/Direct Contact column */}
               <li>
-                <button className="flex items-center gap-3 hover:text-[#d4af37] transition-colors">
-                  <i className="fa-solid fa-calendar-days w-4"></i> Book a Meeting
-                </button>
+                <a 
+                  href="https://calendly.com/kwanusujoseph/30min" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-[#d4af37] transition-colors group"
+                >
+                  <i className="fa-solid fa-calendar-days w-4 group-hover:rotate-12 transition-transform"></i> 
+                  Schedule_Sync
+                </a>
               </li>
             </ul>
           </div>

@@ -5,7 +5,6 @@ import Hero from './Hero';
 import SkillsBand from './SkillsBand';
 import Projects from './ProjectCard';
 import ContactForm from './ContactForm';
-import { Separator } from "@/components/ui/separator";
 
 const Home = () => {
   return (

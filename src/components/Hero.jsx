@@ -1,18 +1,17 @@
-import React, { useState } from 'react'; // Added useState
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import ResumeModal from "./ResumeModal";
 
 const Hero = () => {
-  // 1. Add state to control modal visibility
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
+    const projectsSection = document.getElementById('work'); // Updated to match the Projects ID
     if (projectsSection) {
       projectsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // 2. Update this to trigger the modal instead of window.open
   const toggleResume = () => {
     setIsResumeOpen(!isResumeOpen);
   };
@@ -20,57 +19,112 @@ const Hero = () => {
   return (
     <section 
       id="about" 
-      className="pt-32 pb-20 container mx-auto px-6 flex flex-col md:flex-row items-center gap-12"
+      className="relative pt-40 pb-24 container mx-auto px-6 flex flex-col md:flex-row items-center gap-16 overflow-hidden transition-colors duration-300"
     >
-      <div className="flex-1 space-y-6">
-        <div className="text-[#d4af37] font-bold tracking-[0.3em] text-sm uppercase animate-pulse">
-          Fullstack & DevSecOps
-        </div>
+      {/* Background Accent Blur */}
+      <div className="absolute top-20 left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full -z-10" />
+
+      <div className="flex-1 space-y-8 z-10">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-primary font-black tracking-[0.4em] text-[10px] uppercase flex items-center gap-3"
+        >
+          <span className="w-8 h-[1px] bg-primary"></span>
+          Fullstack Engineer & Technical Mentor
+        </motion.div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold leading-tight">
-          Building Scalable <span className="text-[#d4af37]">Digital Systems</span> with Precision.
-        </h1>
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter text-foreground"
+        >
+          Building Scalable <br />
+          <span className="text-primary italic">Systems</span> with <br />
+          Precision<span className="text-primary">.</span>
+        </motion.h1>
         
-        <p className="text-slate-400 text-lg max-w-xl">
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed font-medium"
+        >
           I transform complex architectural requirements into secure, high-performance 
-          web applications using Python, React, and Cloud Infrastructure.
-        </p>
+          digital artifacts using Python, React, and DevSecOps practices.
+        </motion.p>
         
-        <div className="flex flex-wrap gap-4 pt-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap gap-5 pt-6"
+        >
           <button 
             onClick={scrollToProjects}
-            className="bg-[#d4af37] text-black px-8 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
+            className="group relative bg-primary text-black px-10 py-5 rounded-2xl font-black uppercase text-[11px] tracking-widest overflow-hidden transition-all active:scale-95 shadow-xl shadow-primary/20"
           >
-            View Case Studies
+            <span className="relative z-10">View Case Studies</span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
           
           <button 
-            onClick={toggleResume} // Linked to state toggle
-            className="border border-[#d4af37] text-[#d4af37] px-8 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-[#d4af37]/10 active:scale-95 transition-all"
+            onClick={toggleResume}
+            className="group border-2 border-primary/20 text-foreground px-10 py-5 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:border-primary transition-all active:scale-95 flex items-center gap-3"
           >
-            Resume
+            Resume.md
+            <i className="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform text-primary"></i>
           </button>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Profile Image */}
-      <div className="relative group">
-        <div className="absolute inset-0 bg-[#d4af37] opacity-20 blur-3xl rounded-full group-hover:opacity-40 transition-opacity" />
+      {/* Profile Image with Advanced Morphing */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative"
+      >
+        <div className="absolute inset-0 bg-primary opacity-20 blur-[80px] rounded-full animate-pulse" />
         <div 
-          className="relative w-80 h-80 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] border-4 border-[#d4af37] 
-                     shadow-[0_0_50px_rgba(212,175,55,0.2)] bg-[url('./assets/team-1.jpg')] bg-cover bg-center 
-                     animate-morph hover:pause transition-all duration-700"
+          className="relative w-72 h-72 md:w-[450px] md:h-[450px] border-2 border-primary/30
+                     shadow-[0_0_80px_rgba(212,175,55,0.15)] bg-[url('./assets/team-1.jpg')] bg-cover bg-center 
+                     transition-all duration-1000 grayscale hover:grayscale-0 cursor-pointer"
           style={{ 
-            animation: 'morph 8s ease-in-out infinite, float 6s ease-in-out infinite' 
+            borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+            animation: 'morph 8s ease-in-out infinite' 
           }}
         />
-      </div>
+        
+        {/* Floating Badge */}
+        <div className="absolute -bottom-6 -right-6 bg-card border border-border p-6 rounded-3xl shadow-2xl backdrop-blur-md hidden md:block">
+          <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl">
+              <i className="fa-solid fa-terminal"></i>
+            </div>
+            <div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Location</div>
+              <div className="text-sm font-black text-foreground uppercase tracking-tighter">Nairobi, KE</div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-      {/* 3. Render the Modal component */}
+      {/* Resume Modal Portal */}
       <ResumeModal 
         isOpen={isResumeOpen} 
         onClose={() => setIsResumeOpen(false)} 
       />
+
+      <style jsx>{`
+        @keyframes morph {
+          0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+          100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+      `}</style>
     </section>
   );
 };

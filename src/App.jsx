@@ -10,8 +10,7 @@ import Login from './components/Login';
 function App() {
   return (
     <Router> {/* Router must be the parent of everything using navigation */}
-      <div className="bg-dark text-slate-100 min-h-screen font-inter">
-        <Navbar />
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">        <Navbar />
         
         <main>
           <Routes>

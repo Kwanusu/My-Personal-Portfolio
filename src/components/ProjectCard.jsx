@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * PROJECT DATA ASSETS
- * Added repoUrl and liveUrl for connectivity
  */
 const projects = [
   { 
@@ -32,7 +31,7 @@ const projects = [
     metric: '40% Efficiency Gain',
     category: 'Product Engineering',
     repoUrl: 'https://github.com/Kwanusu/smart-print-ops',
-    liveUrl: null, // Set to null if no live link exists
+    liveUrl: null,
     terminalFiles: [
       { name: 'store.js', language: 'javascript', code: 'const printSlice = createSlice({\n  name: "jobs",\n  initialState,\n  reducers: { updateStatus: (state, action) => { ... } }\n})' },
       { name: 'cluster-monitor.js', language: 'javascript', code: 'const socket = io(process.env.CLUSTER_URL);\nsocket.on("print_update", (data) => dispatch(updateStatus(data)));' }
@@ -56,10 +55,6 @@ const projects = [
   }
 ];
 
-/**
- * SUB-COMPONENT: GITHUB STATS
- * Fetches real-time stars and forks
- */
 const GitHubStats = ({ repoUrl }) => {
   const [stats, setStats] = useState({ stars: 0, forks: 0, loading: true });
 
@@ -81,29 +76,26 @@ const GitHubStats = ({ repoUrl }) => {
     if (repoUrl) fetchStats();
   }, [repoUrl]);
 
-  if (stats.loading) return <div className="animate-pulse text-[10px] text-slate-500 font-mono">LINKING_REMOTE_DATA...</div>;
+  if (stats.loading) return <div className="animate-pulse text-[10px] text-muted-foreground font-mono">LINKING_REMOTE_DATA...</div>;
 
   return (
-    <div className="flex gap-4 font-mono text-[10px] text-slate-400">
-      <div className="flex items-center gap-1.5"><i className="fa-solid fa-star text-[#d4af37]"></i> {stats.stars} STARS</div>
+    <div className="flex gap-4 font-mono text-[10px] text-muted-foreground">
+      <div className="flex items-center gap-1.5"><i className="fa-solid fa-star text-primary"></i> {stats.stars} STARS</div>
       <div className="flex items-center gap-1.5"><i className="fa-solid fa-code-fork"></i> {stats.forks} FORKS</div>
     </div>
   );
 };
 
-/**
- * SUB-COMPONENT: TERMINAL VIEWER
- */
 const Terminal = ({ project }) => {
   const [activeFile, setActiveFile] = useState(project.terminalFiles[0]);
 
   return (
-    <div className="bg-[#020617] border border-white/10 rounded-2xl p-4 lg:p-6 font-mono text-xs lg:text-sm h-[400px] lg:h-[500px] flex flex-col shadow-2xl">
+    <div className="bg-[#020617] border border-border rounded-2xl p-4 lg:p-6 font-mono text-xs lg:text-sm h-[400px] lg:h-[500px] flex flex-col shadow-2xl">
       <div className="flex items-center gap-2 pb-4 border-b border-white/5 mb-4">
         <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-red-500/50" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-          <div className="w-3 h-3 rounded-full bg-green-500/50" />
+          <div className="w-3 h-3 rounded-full bg-red-500/30" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500/30" />
+          <div className="w-3 h-3 rounded-full bg-green-500/30" />
         </div>
         <div className="text-slate-500 text-[10px] tracking-widest uppercase ml-2">
           $ {activeFile.name}
@@ -115,23 +107,32 @@ const Terminal = ({ project }) => {
           <button
             key={file.name}
             onClick={() => setActiveFile(file)}
-            className={`px-3 py-2 whitespace-nowrap rounded-t-lg transition-colors ${activeFile.name === file.name ? 'bg-white/5 text-[#d4af37]' : 'text-slate-500 hover:text-white'}`}
+            className={`px-3 py-2 whitespace-nowrap rounded-t-lg transition-all ${
+              activeFile.name === file.name 
+                ? 'bg-white/5 text-primary border-b-2 border-primary' 
+                : 'text-slate-500 hover:text-white'
+            }`}
           >
             {file.name}
           </button>
         ))}
       </div>
 
-      <pre className="flex-1 overflow-auto text-slate-300 p-2 leading-relaxed">
-        <code>{activeFile.code}</code>
-      </pre>
+      <AnimatePresence mode="wait">
+        <motion.pre 
+          key={activeFile.name}
+          initial={{ opacity: 0, x: 5 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -5 }}
+          className="flex-1 overflow-auto text-slate-300 p-2 leading-relaxed custom-scrollbar selection:bg-primary/30"
+        >
+          <code>{activeFile.code}</code>
+        </motion.pre>
+      </AnimatePresence>
     </div>
   );
 };
 
-/**
- * MAIN COMPONENT
- */
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -141,44 +142,48 @@ const Projects = () => {
   }, [selectedProject]);
 
   return (
-    <section id="work" className="py-32 container mx-auto px-6 relative">
+    <section id="work" className="py-32 container mx-auto px-6 relative transition-colors duration-300">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
         <div className="space-y-4">
-          <h2 className="text-5xl font-black text-white tracking-tighter">
-            Featured <span className="text-[#d4af37] italic">Artifacts</span>
+          <h2 className="text-5xl font-black text-foreground tracking-tighter">
+            Featured <span className="text-primary italic">Artifacts</span>
           </h2>
-          <p className="text-slate-400 max-w-md">
+          <p className="text-muted-foreground max-w-md">
             Enterprise-grade systems designed for scalability, security, and high-performance throughput.
           </p>
         </div>
-        <div className="hidden md:block h-[1px] flex-1 bg-white/5 mx-12 mb-4"></div>
+        <div className="hidden md:block h-[1px] flex-1 bg-border mx-12 mb-4"></div>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((p) => (
           <motion.div
             key={p.id}
-            whileHover={{ y: -8 }}
+            layout
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -10, transition: { duration: 0.2 } }}
             onClick={() => setSelectedProject(p)}
-            className="group relative bg-[#0f172a]/50 border border-white/5 rounded-3xl p-8 cursor-pointer hover:border-[#d4af37]/40 transition-all hover:shadow-[0_0_30px_-10px_rgba(212,175,55,0.2)]"
+            className="group relative bg-card border border-border rounded-3xl p-8 cursor-pointer hover:border-primary/40 transition-all hover:shadow-[0_0_30px_-10px_rgba(212,175,55,0.2)]"
           >
-            <div className="absolute top-8 right-8 h-10 w-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#d4af37] group-hover:text-black transition-all">
+            <div className="absolute top-8 right-8 h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
               <i className="fa-solid fa-code-branch text-xs"></i>
             </div>
             
             <div className="space-y-6">
-              <span className="text-[10px] uppercase tracking-[3px] text-[#d4af37] font-bold">{p.category}</span>
-              <h3 className="text-2xl font-black text-white">{p.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed line-clamp-2">{p.desc || p.problem}</p>
+              <span className="text-[10px] uppercase tracking-[3px] text-primary font-bold">{p.category}</span>
+              <h3 className="text-2xl font-black text-foreground">{p.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">{p.desc || p.problem}</p>
               
-              <div className="flex items-center gap-3 py-2 px-3 bg-white/5 rounded-xl border border-white/5 w-fit">
+              <div className="flex items-center gap-3 py-2 px-3 bg-background rounded-xl border border-border w-fit">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] font-mono text-slate-300 tracking-wider">{p.metric}</span>
+                <span className="text-[10px] font-mono text-foreground tracking-wider">{p.metric}</span>
               </div>
 
               <div className="flex gap-2 flex-wrap">
                 {p.tags.map(t => (
-                  <span key={t} className="text-[9px] font-mono bg-black border border-white/10 text-slate-400 px-2 py-1 rounded-md uppercase">{t}</span>
+                  <span key={t} className="text-[9px] font-mono bg-background border border-border text-muted-foreground px-2 py-1 rounded-md uppercase">{t}</span>
                 ))}
               </div>
             </div>
@@ -192,19 +197,24 @@ const Projects = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[#020617]/95 backdrop-blur-xl flex items-center justify-center p-4 lg:p-12 overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex items-center justify-center p-4 lg:p-12 overflow-y-auto"
           >
-            <div className="container mx-auto max-w-7xl">
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="container mx-auto max-w-7xl"
+            >
               <div className="flex justify-between items-center mb-12">
                 <div className="space-y-3">
-                  <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tighter">
-                    {selectedProject.title} <span className="text-[#d4af37] italic">Deep Dive</span>
+                  <h2 className="text-3xl lg:text-5xl font-black text-foreground tracking-tighter">
+                    {selectedProject.title} <span className="text-primary italic">Deep Dive</span>
                   </h2>
                   <GitHubStats repoUrl={selectedProject.repoUrl} />
                 </div>
                 <button 
                   onClick={() => setSelectedProject(null)} 
-                  className="w-12 h-12 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-500 transition-all flex items-center justify-center"
+                  className="w-12 h-12 rounded-full bg-card border border-border hover:bg-red-500/20 hover:text-red-500 transition-all flex items-center justify-center"
                 >
                   <i className="fa-solid fa-xmark text-xl"></i>
                 </button>
@@ -213,19 +223,19 @@ const Projects = () => {
               <div className="grid lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-5 space-y-10">
                   <div className="space-y-3">
-                    <h4 className="text-[#d4af37] uppercase tracking-widest text-[10px] font-bold">The Challenge</h4>
-                    <p className="text-white text-lg lg:text-xl leading-relaxed">{selectedProject.problem}</p>
+                    <h4 className="text-primary uppercase tracking-widest text-[10px] font-bold">The Challenge</h4>
+                    <p className="text-foreground text-lg lg:text-xl leading-relaxed">{selectedProject.problem}</p>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="text-[#d4af37] uppercase tracking-widest text-[10px] font-bold">The Architecture</h4>
-                    <p className="text-slate-400 leading-relaxed">{selectedProject.solution}</p>
+                    <h4 className="text-primary uppercase tracking-widest text-[10px] font-bold">The Architecture</h4>
+                    <p className="text-muted-foreground leading-relaxed">{selectedProject.solution}</p>
                   </div>
-                  <div className="pt-6 border-t border-white/5 flex flex-wrap gap-4">
+                  <div className="pt-6 border-t border-border flex flex-wrap gap-4">
                     <a 
                       href={selectedProject.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#d4af37] text-black px-8 py-3 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-[#f1c40f] transition-all"
+                      className="bg-primary text-black px-8 py-3 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-primary-hover transition-all"
                     >
                       <i className="fa-brands fa-github"></i> View Repository
                     </a>
@@ -234,9 +244,9 @@ const Projects = () => {
                         href={selectedProject.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="border border-white/10 text-white px-8 py-3 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
+                        className="border border-border text-foreground px-8 py-3 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-card transition-all"
                       >
-                        <i className="fa-solid fa-arrow-up-right-from-square text-[#d4af37]"></i> Live Demo
+                        <i className="fa-solid fa-arrow-up-right-from-square text-primary"></i> Live Demo
                       </a>
                     )}
                   </div>
@@ -246,7 +256,7 @@ const Projects = () => {
                   <Terminal project={selectedProject} />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

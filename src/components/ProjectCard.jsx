@@ -13,8 +13,8 @@ const projects = [
     tags: ['Django', 'Docker', 'PostgreSQL'],
     metric: '99.9% Uptime',
     category: 'Fullstack / DevSecOps',
-    repoUrl: 'https://github.com/Kwanusu/innovet-tech-school',
-    liveUrl: 'https://innovet.tech',
+    repoUrl: 'https://github.com/Kwanusu/Innovet-Tech-School.git',
+    liveUrl: 'https://innovet-tech-school-d3h1qcagz-kwanusu-josephs-projects.vercel.app',
     terminalFiles: [
       { name: 'permissions.py', language: 'python', code: 'class IsInstructor(BasePermission):\n    def has_object_permission(self, request, view, obj):\n        return obj.tenant_id == request.user.tenant_id' },
       { name: 'docker-compose.yml', language: 'yaml', code: 'services:\n  app:\n    build: .\n    deploy:\n      replicas: 3\n      restart_policy: always' },
@@ -30,7 +30,7 @@ const projects = [
     tags: ['React', 'Node.js', 'Redux'],
     metric: '40% Efficiency Gain',
     category: 'Product Engineering',
-    repoUrl: 'https://github.com/Kwanusu/smart-print-ops',
+    repoUrl: 'https://github.com/Kwanusu/smart_print_shop.git',
     liveUrl: null,
     terminalFiles: [
       { name: 'store.js', language: 'javascript', code: 'const printSlice = createSlice({\n  name: "jobs",\n  initialState,\n  reducers: { updateStatus: (state, action) => { ... } }\n})' },
@@ -46,7 +46,7 @@ const projects = [
     tags: ['Terraform', 'AWS', 'GitHub Actions'],
     metric: 'Zero Manual Deploys',
     category: 'Cloud Infrastructure',
-    repoUrl: 'https://github.com/Kwanusu/gitops-pipeline',
+    repoUrl: 'https://github.com/Kwanusu/DevOps-Capstone.git',
     liveUrl: null,
     terminalFiles: [
       { name: 'main.tf', language: 'hcl', code: 'resource "aws_instance" "app_server" {\n  ami           = "ami-0c55b159cbfafe1f0"\n  instance_type = "t2.micro"\n}' },
